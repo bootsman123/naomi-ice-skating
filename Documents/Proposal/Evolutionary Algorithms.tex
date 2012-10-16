@@ -1,0 +1,85 @@
+\documentclass[10pt]{article}
+
+% Allows the use of \subtitle{...}.
+\usepackage{titling}
+\newcommand{\subtitle}[1]{%
+  \posttitle{%
+    \par\end{center}
+    \begin{center}\large#1\end{center}
+    \vskip0.5em}%
+}
+
+% Seperate paragraphs by an empty line and removes indentation.
+\usepackage[parfill]{parskip}
+
+\begin{document}
+% Titlepage.
+\title{Ice skating with Naomi}
+\subtitle{Evolving ice skating behavior of a Nao robot in simulation using neuro evolution.}
+
+\author{Bas Bootsma (0719080) \and Roland Meertens (3009653) \and Tom de Ruijter (XXXXXXX)}
+
+\date{October 16, 2012}
+
+\maketitle
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% INTRODUCTION
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Introduction}
+Locomotion for robots have been an important research topic in evolutionary robotics {REFERENCES}. Especially bipedal robots are interesting to investigate since such robots are able to take advantage of the same environments humans traverse. 
+
+
+
+
+As explained during the meetings and the presentations our goal is to investigate whether it is possible to evolve ice skating behavior in a Nao robot. Using evolutionary algorithms provides several benefits. First, 
+
+
+Instead of using a physical robot we plan on using a specific robot model in a simulated environment, which provides several benefits. First, there is no risk in damaging the robot, which can happen if the robot falls over. Second, 
+
+
+Why use EA's for this?
+
+Research question
+
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% LITERATURE REVIEW
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Literature Review}
+The first part of our literature review was searching for other projects in which a robot learned to ice-skate. The only paper found was the paper \emph{Ice Skating Humanoid Robot}\cite{springerlink:10.1007/978-3-642-32527-4_19}, in which the normal walking gait of a humanoid robot is modified into a ice-skating gait. As a result the robot is able to walk very slowly on ice, analogue to the initial ice skating phase. As the walking gait is modified by manually changing the parameters we expect that using genetic algorithms the search space can be traversed quicker and a more optimal solution can be found.
+
+As our project has the aim of evolving an ice-skating gait without starting with a walking gait, related research is the evolution of walking gaits. The paper \emph{Gait Evolution for Humanoid Robot in a Physically Simulated Environment}\cite{springerlink:10.1007/978-3-642-22907-7_9} aims to evolve a bipedal walking gait using a simulator. Using recurrent neural networks a stable walking gait is realized. This paper describes a few learning algorithms, one of them is the HyperNEAT algorithm.
+
+This algorithm is described in the paper \emph{A Hypercube-Based Encoding for Evolving Large-Scale Neural Networks}\cite{mitpress:hypercubebasedencoding}. It describes a method called Hypercube-based Neuroevolution of Augmenting Topologies (HyperNEAT). This algorithm evolves an indirect encoding that can produce connectivity patterns with symmetries and repeating motifs. The authors of the paper conclude that the HyperNEAT algorithm is able to explore the space of regular connectivity patterns. As the second phase of ice-skating consists of repeating symmetric motifs the expectation is that this algorithm is able to generate a stable ice-skating gait.
+
+The HyperNEAT algorithm is already used by the authors of the paper \emph{Evolving Robot Gaits in Hardware: the HyperNEAT Generative Encoding Vs. Parameter Optimization}\cite{Yosinski2011EvolvedGaits}. This paper shows that HyperNEAT works very well when evolving a walking gait for a quadruped robot. The resulting gait is a very suitable walking gait. This paper shows that it is possible to evolve a walking gait using HyperNEAT, hopefully this is also possible using a biped robot.
+
+%The HyperNEAT algorithm is also used by the authors of the paper "A step toward evolving biped walking behaviour"[4]. In this paper the authors try to develop a bipedal walker using HyperNEAT. Unfortunately no experiments were able to evolve a stable bipedal gait. The authors conclude that an biped walking behaviour as fluid and stable as that in nature is beyond the current state of the art. They also suggest a future path through adding adaptive mechanisms to evolve stable, longer walking biped behaviours. 
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% EXPERIMENT SETUP
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Experiment Setup}
+Recap of what we mean by ice skating and stick model, etc.
+As has been previously discussed we want to use a simulator in which ...
+
+representation, fitness function,
+type of EA, ...
+
+Abstract representation of the Nao robot.
+
+\subsection{HyperNEAT}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% EXPECTATIONS
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Expectations}
+
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% BIBLIOGRAPHY
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\bibliographystyle{plain}
+\bibliography{bibliography}
+
+\end{document}
