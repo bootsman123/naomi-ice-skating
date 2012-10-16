@@ -83,14 +83,17 @@ The HyperNEAT algorithm is also used by the authors of the paper \emph{A Step To
 % EXPERIMENT SETUP
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Experiment Setup}
-The goal of the experiment is evolving ice skating behavior of a Nao robot in simulation using neuro evolution, where the Nao is represented using a stick model. As described in section \ref{sec:introduction} the focus of our project is simulating the second stage of ice skating. As has been previously discussed a simulator is used which is able to simulate physics and the Nao robot. As our focus is only on the second stage of ice skating the Nao robot will be given an initial forward speed. 
+The goal of the experiment is evolving ice skating behavior of a Nao robot in simulation using neuro evolution, where the Nao is represented using a stick model. As described in section \ref{sec:introduction} the focus of our project is simulating the second stage of ice skating. As has been previously discussed a simulator is used which is able to simulate physics and the Nao robot. A simulator that is able to handle input, able to handle stick models and has a physics engine is Gazebo. As our focus is only on the second stage of ice skating the Nao robot will be given an initial forward speed. 
  
-In the experiment every next generation is chosen based on the fitness function. Our fitness function is a combination of both speedloss, distance travelled after 10 seconds, and the safety of the Nao robot. As the safety of the Nao is of big importance outside the simulator, this will be used in the fitness function. The fitness will thus be lower when the Nao robot falls down. 
+In the experiment every next generation is chosen based on the fitness function. Our fitness function is a combination of both speedloss, distance travelled after 10 seconds, and the safety of the Nao robot. As the safety of the Nao is of big importance outside the simulator, this will be used in the fitness function. The fitness will thus be lower when the Nao robot falls down.  
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % EXPECTATIONS
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Expectations}
+\label{sec:expectation}
+
+As the safety of the Nao is very important and falling will result in a loss of fitness, the initial stages of our evolution are expected to result in a balancing behaviour of the Nao. After the Nao is able to balance himself, it is expected that the network evolves a behaviour in which the Nao is able to produce small steps. As balancing and making small steps will co-evolve, our expectation is that the Nao will be able to learn ice-skating after a sufficient amount of iterations.  
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % BIBLIOGRAPHY
