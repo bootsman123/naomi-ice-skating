@@ -15,7 +15,7 @@
 \begin{document}
 % Titlepage.
 \title{Ice skating with Naomi}
-\subtitle{Evolving ice skating behavior of a Nao robot in simulation using neuro evolution.}
+\subtitle{Evolving ice skating behavior of a Nao robot in simulation using neuroevolution.}
 
 \author{Bas Bootsma (0719080) \and Roland Meertens (3009653) \and Tom de Ruijter (XXXXXXX)}
 
@@ -27,27 +27,20 @@
 % INTRODUCTION
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Introduction}
-Locomotion for robots have been an important research topic in evolutionary robotics {REFERENCES}. Especially bipedal robots are interesting to investigate since such robots are able to take advantage of the same environments humans traverse. 
+Locomotion for robots have been an important research topic in evolutionary robotics [REFERENCES}. Especially bipedal robots are interesting to investigate since such robots are able to take advantage of the same environments humans can traverse. One can think in this case of stairs or uneven terrain which is harder to traverse for non-bipedal (e.g. wheeled) robots. Several succesfull walking gaits have been developed for bipedal robots, however most of them have been manually designed [REFERENCES]. In this case using evolutionary algorithms provides several benefits. In general a bipedal robot has many degrees of freedom which results into a large number of possible configurations. Evolutionary algorithms are able to efficiently search the search space by taking advantage of ...
 
+\subsection{Research Question}
+Since several walking gaits have already been generated for bipedal robots on even ... surfaces, we want to investige whether it is possible to generate an ice skating gait.  
 
-
-
-As explained during the meetings and the presentations our goal is to investigate whether it is possible to evolve ice skating behavior in a Nao robot. Using evolutionary algorithms provides several benefits. First, 
-
-
-Instead of using a physical robot we plan on using a specific robot model in a simulated environment, which provides several benefits. First, there is no risk in damaging the robot, which can happen if the robot falls over. Second, 
-
-
-Why use EA's for this?
-
-Research question
-
+\begin{quote}
+	Evolving ice skating behavior of a Nao robot in simulation using neuroevolution.
+\end{quote}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % LITERATURE REVIEW
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Literature Review}
-The first part of our literature review was searching for other projects in which a robot learned to ice-skate. The only paper found was the paper \emph{Ice Skating Humanoid Robot}\cite{springerlink:10.1007/978-3-642-32527-4_19}, in which the normal walking gait of a humanoid robot is modified into a ice-skating gait. As a result the robot is able to walk very slowly on ice, analogue to the initial ice skating phase. As the walking gait is modified by manually changing the parameters we expect that using genetic algorithms the search space can be traversed quicker and a more optimal solution can be found.
+The first part of our literature review was searching for other projects in which a robot learned to ice skate. The only paper found was the paper \emph{Ice Skating Humanoid Robot}\cite{springerlink:10.1007/978-3-642-32527-4_19}, in which the normal walking gait of a humanoid robot is modified into a ice-skating gait. As a result the robot is able to walk very slowly on ice, analogue to the initial ice skating phase. As the walking gait is modified by manually changing the parameters we expect that using genetic algorithms the search space can be traversed quicker and a more optimal solution can be found.
 
 As our project has the aim of evolving an ice-skating gait without starting with a walking gait, related research is the evolution of walking gaits. The paper \emph{Gait Evolution for Humanoid Robot in a Physically Simulated Environment}\cite{springerlink:10.1007/978-3-642-22907-7_9} aims to evolve a bipedal walking gait using a simulator. Using recurrent neural networks a stable walking gait is realized. This paper describes a few learning algorithms, one of them is the HyperNEAT algorithm.
 
@@ -61,6 +54,8 @@ The HyperNEAT algorithm is already used by the authors of the paper \emph{Evolvi
 % EXPERIMENT SETUP
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Experiment Setup}
+Instead of using a physical robot we plan on using a specific robot model in a simulated environment, which provides several benefits. First, there is no risk in damaging the robot, which can happen if the robot falls over. Second, 
+
 Recap of what we mean by ice skating and stick model, etc.
 As has been previously discussed we want to use a simulator in which ...
 
