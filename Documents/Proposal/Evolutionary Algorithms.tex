@@ -27,6 +27,7 @@
 % INTRODUCTION
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Introduction}
+\label{sec:introduction}
 Gait analysis in animals and humans has been studied for over more than a century. ...
 
 Locomotion for robots have been an important research topic in evolutionary robotics [REFERENCES]. Especially bipedal robots are interesting to investigate since such robots are able to take advantage of the same environments humans can traverse. One can think in this case of stairs or uneven terrain which is harder to traverse for non-bipedal (e.g. wheeled) robots. Several succesfull walking gaits have been developed for bipedal robots, however most of them have been manually designed [REFERENCES]. In this case using evolutionary algorithms provides several benefits. In general a bipedal robot has many degrees of freedom which results into a large number of possible configurations. Evolutionary algorithms are able to efficiently search the search space by taking advantage of ...
@@ -59,10 +60,12 @@ The HyperNEAT algorithm is also used by the authors of the paper \emph{A Step To
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Experiment Setup}
 
-
 Recap of what we mean by ice skating and stick model, etc.
 As has been previously discussed we want to use a simulator in which ...
 
+The goal of the experiment is evolving ice skating behavior of a Nao in simulation using neuro evolution. As described in section \ref{sec:introduction} the focus of our project is simulating the second stage of ice skating. A stick model of the Nao is simulated using Gazebo. The fitness function is a combination of both speedloss and distance travelled after 10 seconds. 
+
+As described in section \ref{sec:representation}
 representation, fitness function,
 type of EA, ...
 
