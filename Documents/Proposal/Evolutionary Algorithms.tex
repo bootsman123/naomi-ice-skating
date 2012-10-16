@@ -17,7 +17,7 @@
 \title{Ice skating with Naomi}
 \subtitle{Evolving ice skating behavior of a Nao robot in simulation using neuroevolution.}
 
-\author{Bas Bootsma (0719080) \and Roland Meertens (3009653) \and Tom de Ruijter (XXXXXXX)}
+\author{Bas Bootsma (0719080) \and Roland Meertens (3009653) \and Tom de Ruijter (3016269)}
 
 \date{October 16, 2012}
 
@@ -28,30 +28,54 @@
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Introduction}
 \label{sec:introduction}
-Gait analysis in animals and humans has been studied for over more than a century. ...
+Gait analysis in animals and humans has been studied for over more than a century [REFERENCES]. In the past couple of years robot researchers have taken an interest in developing gaits for various kinds of robots [REFERENCES]. In this field especially bipedal robots are interesting to investigate since such robots are able to take advantage of the same environments humans can traverse. One can think in this case of stairs or uneven terrain which is harder to traverse for non-bipedal (e.g. wheeled) robots. Several succesfull walking gaits have been developed for bipedal robots, however most of them have been manually designed [REFERENCES]. Taking on an evolutionary approach to developing gaits provides several benefits. In general a bipedal robot has many degrees of freedom which results into a large number of possible configurations. Evolutionary algorithms are able to efficiently search the search space by taking advantage of ...
 
-Locomotion for robots have been an important research topic in evolutionary robotics [REFERENCES]. Especially bipedal robots are interesting to investigate since such robots are able to take advantage of the same environments humans can traverse. One can think in this case of stairs or uneven terrain which is harder to traverse for non-bipedal (e.g. wheeled) robots. Several succesfull walking gaits have been developed for bipedal robots, however most of them have been manually designed [REFERENCES]. In this case using evolutionary algorithms provides several benefits. In general a bipedal robot has many degrees of freedom which results into a large number of possible configurations. Evolutionary algorithms are able to efficiently search the search space by taking advantage of ...
-
-\subsection{Research Question}
-Since several walking gaits have already been generated for bipedal robots on even ... surfaces, we want to investige whether it is possible to generate an ice skating gait.  
+\subsection{Research Goal}
+Since several walking gaits have already been generated for bipedal robots on even ... surfaces, we want to investige whether it is possible to generate an ice skating gait. ....
 
 \begin{quote}
-	Evolving ice skating behavior of a Nao robot in simulation using neuroevolution.
+	Evolving ice skating behavior of a Nao robot in a simulated environment using neuroevolution.
 \end{quote}
 
-Instead of using a physical robot we plan on using a robot model in a simulated environment, which provides several benefits. First, there is no risk in damaging the robot, which can happen if the robot falls over. Second, using a simulated environment allows us to easily adjust the environment, namely the surface which has to match 
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+% REPRESENTATION
+%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
+\section{Representation}
+\label{sec:representation}
+In order to get a better idea of what we are going to do, we will discuss and explain different aspects of the research goal in more detail. Firstly, we will explain what behavior we are evolving, secondly why we are using a Nao robot in a simulated environment and finally how we are using neuroevolution.
+
+Instead of evolving fully functional ice skating behavior we focus on ice skating in a straight line from rest. Furthermore, we do not plan on using actual ice skates, instead we let the robot use its feet. Under these conditions we assume ice skating behavior is a two stage process:
+\begin{enumerate}
+	\item \textbf{Initial stage}: In this stage the robot has to make speed from a standing position.
+	\item \textbf{Recurring stage}: In this stage the robot maintains a continuous velocity while performing the actual ice skating movement. The ice skating movement is a symmetrical recurring motion.
+\end{enumerate}
+
+In our case we focus on the recurring stage, since it would probably we difficult enough already to maintain balance and velocity for the robot.
+
+Since we have an actual Nao robot available on the university we thought it would be cool to evolve ice skating behavior for the Nao robot. However, we decided to use a robot model of the Nao robot in a simulated environment, which provides several benefits to a physical robot. First, there is no risk in damaging the robot, which can happen if the robot falls over. Second, using a simulated environment allows us to easily adjust the environment. In our case the surface of the environment has to match the slipperiness of ice, which can quite easily be done in a simulated environmenty by reducing the friction between the surface and the feet of the robot. Finally, using a simulated environment allows us to easily run many simulations, which is needed since the search space is very large.
+
+Part of the assignment was to use
+
+\subsection{NEAT}
+1. Start with simple networks, evolve to more complex networks.
+2. Historical markers;
+3. Niche evolution;
+
+\subsection{HyperNEAT}
+1. Structural mapping.
+2. Symmetrical patterns.
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % LITERATURE REVIEW
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Literature Review}
-The first part of our literature review was searching for other projects in which a robot learned to ice skate. The only paper found was the paper \emph{Ice Skating Humanoid Robot}\cite{springerlink:10.1007/978-3-642-32527-4_19}, in which the normal walking gait of a humanoid robot is modified into a ice-skating gait. As a result the robot is able to walk very slowly on ice, analogue to the initial ice skating phase. As the walking gait is modified by manually changing the parameters we expect that using genetic algorithms the search space can be traversed quicker and a more optimal solution can be found.
+The first part of our literature review was searching for other projects in which a robot learned to ice skate. The only paper found was the paper \emph{Ice Skating Humanoid Robot} \cite{springerlink:10.1007/978-3-642-32527-4_19}, in which the normal walking gait of a humanoid robot is modified into a ice-skating gait. As a result the robot is able to walk very slowly on ice, analogue to the initial ice skating phase. As the walking gait is modified by manually changing the parameters we expect that using genetic algorithms the search space can be traversed more quickly and a more optimal solution can be found.
 
 As our project has the aim of evolving an ice-skating gait without starting with a walking gait, related research is the evolution of walking gaits. The paper \emph{Gait Evolution for Humanoid Robot in a Physically Simulated Environment} \cite{springerlink:10.1007/978-3-642-22907-7_9} aims to evolve a bipedal walking gait using a simulator. Using recurrent neural networks a stable walking gait is realized. This paper describes a few learning algorithms, one of them is the HyperNEAT algorithm.
 
-This algorithm is described in the paper \emph{A Hypercube-Based Encoding for Evolving Large-Scale Neural Networks} \cite{mitpress:hypercubebasedencoding}. It describes a method called Hypercube-based Neuroevolution of Augmenting Topologies (HyperNEAT). This algorithm evolves an indirect encoding that can produce connectivity patterns with symmetries and repeating motifs. The authors of the paper conclude that the HyperNEAT algorithm is able to explore the space of regular connectivity patterns. As the second phase of ice-skating consists of repeating symmetric motifs the expectation is that this algorithm is able to generate a stable ice-skating gait.
+This algorithm is described in the paper \emph{A Hypercube-Based Encoding for Evolving Large-Scale Neural Networks} \cite{mitpress:hypercubebasedencoding}. It describes a method called Hypercube-based Neuroevolution of Augmenting Topologies (HyperNEAT). This algorithm evolves an indirect encoding that can produce connectivity patterns with symmetries and repeating motifs. The authors of the paper conclude that the HyperNEAT algorithm is able to explore the space of regular connectivity patterns. As the second phase of ice-skating consists of repeating symmetric motifs the expectation is that this algorithm is able to generate a stable ice skating gait.
 
-The HyperNEAT algorithm is already used by the authors of the paper \emph{Evolving Robot Gaits in Hardware: the HyperNEAT Generative Encoding Vs. Parameter Optimization} \cite{Yosinski2011EvolvedGaits}. This paper shows that HyperNEAT works very well when evolving a walking gait for a quadruped robot. The resulting gait is a very suitable walking gait. This paper shows that it is possible to evolve a walking gait using HyperNEAT, hopefully this is also possible using a biped robot.
+The HyperNEAT algorithm is already used by the authors of the paper \emph{Evolving Robot Gaits in Hardware: the HyperNEAT Generative Encoding Vs. Parameter Optimization} \cite{Yosinski2011EvolvedGaits}. This paper shows that HyperNEAT works very well when evolving a walking gait for a quadruped robot. The resulting gait is a very suitable walking gait. This paper shows that it is possible to evolve a walking gait using HyperNEAT, hopefully this is also possible using a bipedal robot.
 
 The HyperNEAT algorithm is also used by the authors of the paper \emph{A Step Toward Evolving Biped Walking Behavior Through Indirect Encoding} \cite{steptowardevolvingbipedwalkingbehavior}. In this paper the authors try to develop a bipedal walker using HyperNEAT. Unfortunately no experiments were able to evolve a stable bipedal gait. The authors conclude that an biped walking behaviour as fluid and stable as that in nature is beyond the current state of the art. They also suggest a future path through adding adaptive mechanisms to evolve stable, longer walking biped behaviours. 
 
@@ -59,12 +83,9 @@ The HyperNEAT algorithm is also used by the authors of the paper \emph{A Step To
 % EXPERIMENT SETUP
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Experiment Setup}
-\label{sec:experimentsetup}
-
-The goal of the experiment is evolving ice skating behavior of a Nao in simulation using neuro evolution, where the Nao is represented using a stick model. As described in section \ref{sec:introduction} the focus of our project is simulating the second stage of ice skating. As has been previously discussed a simulator is used which is able to simulate physics and the Nao. As our focus is only on the second stage of ice skating the Nao will be given an initial forward speed. 
-
-In the experiment every next generation is chosen based on the fitness function. Our fitness function is a combination of both speedloss, distance travelled after 10 seconds, and the safety of the Nao. As the safety of the Nao is of big importance outside the simulator, this will be used in the fitness function. The fitness will thus be lower when the Nao falls down. 
-
+The goal of the experiment is evolving ice skating behavior of a Nao robot in simulation using neuro evolution, where the Nao is represented using a stick model. As described in section \ref{sec:introduction} the focus of our project is simulating the second stage of ice skating. As has been previously discussed a simulator is used which is able to simulate physics and the Nao robot. As our focus is only on the second stage of ice skating the Nao robot will be given an initial forward speed. 
+ 
+In the experiment every next generation is chosen based on the fitness function. Our fitness function is a combination of both speedloss, distance travelled after 10 seconds, and the safety of the Nao robot. As the safety of the Nao is of big importance outside the simulator, this will be used in the fitness function. The fitness will thus be lower when the Nao robot falls down. 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % EXPECTATIONS
