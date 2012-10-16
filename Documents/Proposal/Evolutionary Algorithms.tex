@@ -59,21 +59,12 @@ The HyperNEAT algorithm is also used by the authors of the paper \emph{A Step To
 % EXPERIMENT SETUP
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Experiment Setup}
+\label{sec:experimentsetup}
 
-Recap of what we mean by ice skating and stick model, etc.
-As has been previously discussed we want to use a simulator in which ...
+The goal of the experiment is evolving ice skating behavior of a Nao in simulation using neuro evolution, where the Nao is represented using a stick model. As described in section \ref{sec:introduction} the focus of our project is simulating the second stage of ice skating. As has been previously discussed a simulator is used which is able to simulate physics and the Nao. As our focus is only on the second stage of ice skating the Nao will be given an initial forward speed. 
 
-The goal of the experiment is evolving ice skating behavior of a Nao in simulation using neuro evolution. As described in section \ref{sec:introduction} the focus of our project is simulating the second stage of ice skating. A stick model of the Nao is simulated using Gazebo. The fitness function is a combination of both speedloss and distance travelled after 10 seconds. 
+In the experiment every next generation is chosen based on the fitness function. Our fitness function is a combination of both speedloss, distance travelled after 10 seconds, and the safety of the Nao. As the safety of the Nao is of big importance outside the simulator, this will be used in the fitness function. The fitness will thus be lower when the Nao falls down. 
 
-As described in section \ref{sec:representation}
-representation, fitness function,
-type of EA, ...
-
-Abstract representation of the Nao robot.
-
-\subsection{NEAT}
-
-\subsection{HyperNEAT}
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % EXPECTATIONS
