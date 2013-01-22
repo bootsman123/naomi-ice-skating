@@ -53,25 +53,6 @@ In section \ref{sec:initial-experimental-setup} \emph{Initial Experimental Setup
 \section{Initial Experimental Setup}
 \label{sec:initial-experimental-setup}
 
-
-\subsection{NEAT}
-NeuroEvolution of Augmenting Topologies (NEAT) technique developed Ken O. Stanley in 2002, which makes use of genetic algorithms for evolving artificial neural networks \cite{wikipedia:neat}. The technique both alters the weights and the structure (topologies) of the network to find a balance between the fitness and the diversity of the solutions. NEAT has several properties which make it an interesting technique.
-
-\begin{itemize}
-	\item \textbf{Complexifying}: Complexifying is the incremental increase of complexity over time. This means that NEAT starts out with simple topologies and gradually increases complexity over generations.
-	\item \textbf{Speciation}: With speciation topologies which are similar are grouped together in niches. This protects for example new topologies, which generally have worse fitness when compared to already existing topologies, thus allowing the new topologies evolve in a protected niche instead of immediately discarding them.
-	\item \textbf{Historical marking}: Each gene is assigned a unique historical marker which allows later generations to track origin of their genes.  
-\end{itemize}
-
-\subsection{HyperNEAT}
-HyperNEAT is the successor of NEAT and provides several extra properties which we believe are beneficial for generating ice skating behavior.
-
-\begin{itemize}
-	\item \textbf{Geometric relationships}: HyperNEAT is aware of the geometric relationships of the input. In our case this means that it not only knows the different joints, but also the relationships between the joints. For example, it might be able to exploit the relationship between the ankle and knee joint by posing extra restrictions to prevent the Nao robot from falling over.
-	\item \textbf{Symmetrical and recurrent patterns}: HyperNEAT is able to find symmetrical and recurrent patterns. In our case this is important, since ice skating behavior contains symmetrical and recurrent elements, which we hope HyperNEAT is able to find.
-\end{itemize}
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % HYPOTHETICAL EXPERIMENTAL SETUP
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -128,7 +109,7 @@ As described in section \ref{sec:hypothetical-experimental-setup} HyperNEAT does
 
 \begin{figure}[h!]
 \includegraphics[width=100mm]{images/jgapSetup}
-\caption{Setup used for running our evolutionary algorithm}
+\caption{Setup used for running our evolutionary algorithm.}
 \label{fig:jgapsetup}
 \end{figure}
 
@@ -158,7 +139,6 @@ As there is no clear goal that our Nao has to reach while moving forward and our
 \label{fig:armFitness}
 \end{figure}
 
-
 During the running of the evolutionary algorithm with the arm moving fitness function no real milestones can be found. The algorithm starts with moving its arm randomly, and keeps selecting a better arm-raising motion every generation. Unfortunately our program crashed after 32 generations. 
 
 Our final chromosome still has values that are terribly off compared to the ideal values. Apart from this “problem” the final result looks like a very solid arm movement. The conclusion of our arm moving fitness function is that evolutionary algorithms are very capable of producing the simple movement of one joint.
@@ -170,7 +150,6 @@ Our final chromosome still has values that are terribly off compared to the idea
 \caption{Fitness of the algorithm that evolves a motion of four seconds.}
 \label{fig:walkingFitness}
 \end{figure}
-
 
 In the first five generations the evolved behaviours consist of our Nao performing some random movement which leads to a strange forwards motion. Starting from generation six the algorithm develops a rolling motion that ends at the four second mark. As our distance-measure point is the middle of our robot this makes a lot of sense. By performing a roll a little bit of extra distance is gained during the four seconds in which the motion is performed. Starting at iteration 120 a new behaviour emerges: sidewards \emph{shuffling}. This behaviour proves to be the best reachable behaviour in 200 generations as no better behaviour is found. 
 
@@ -184,7 +163,6 @@ Although our best chromosome after 200 generations is capable of traversing a la
 \label{fig:walkingLongFitness}
 \end{figure}
 
-
 In the first five generations the evolved behaviours consist of our Nao performing some random movement leading to eventually falling on its back. In generation six our algorithm discovers that by turning around at the start of the motion it gains a little more distance (as the measure point for distance is the middle of our robot). In the same generation it starts to walk by using its arms as support (just like a gorilla). It also generates a motion that prevents the Nao from falling, consecutive generations improve the motion and keep preventing our Nao from tumbling over (except for generation 60).
 
 Although our best chomosome after 200 iterations is capable of traversing a large distance in twelve seconds by repeating the four seconds long motion three times it unfortunately does not look like a very stable gait. Evolutionary algorithms thus are also very capable of producing an advanced repeated movement like this when they have enough time. Just like the fitness function of the four second long motion (in section \ref{sec:resultsJGapForwardsMoving} this motion is not stable enough to use in a real robot and our fitness function has to be improved. 
@@ -192,14 +170,13 @@ Although our best chomosome after 200 iterations is capable of traversing a larg
 \subsection{Ice skating}
 \begin{figure}[h!]
 \includegraphics[width=100mm]{images/iceskating}
-\caption{Fitness of the algorithm that evolves a motion based on the sensor data from Marlies}
+\caption{Fitness of the algorithm that evolves a motion based on the sensor data from Marlies.}
 \label{fig:iceskatingFitness}
 \end{figure}
 
 Although figure \ref{fig:iceskatingFitness} shows an improvement of fitness, the fitness stays very low. When visually inspecting the produced behaviours no real improvement can be seen. 
 
 As our algorithm does not converge to an ice skating behaviour the only conclusion is that our fitness function has to be adjusted to account for more than just the accelerometer data. 
-
 
 \section{General conclusion for all results}
 As shown in the previous section (section \ref{sec:analysisOfTheResults}) our setup is able to generate very nice behaviours as long as the fitness function is chosen correctly. Especially our arm moving fitness (section \ref{sec:resultsJGapArmMoving}) shows that the generated behaviours still are not optimal as the generated values are off from their ideal values. This problem can probably be easily solved by having a larger population and more generations, which is not possible in a small computational time of less than a day. 
