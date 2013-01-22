@@ -1,12 +1,7 @@
-# Compiled Object files
-*.slo
-*.lo
-*.o
-
-# Compiled Dynamic libraries
-*.so
-
-# Compiled Static libraries
-*.lai
-*.la
-*.a
+# LaTeX files.
+*.log
+*.aux
+*.bbl
+*.blg
+*.tcp
+*.tps
