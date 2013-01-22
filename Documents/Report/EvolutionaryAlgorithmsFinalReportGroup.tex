@@ -117,42 +117,23 @@ By default a walking behaviour is already provided by Webots containing the exac
 A similar procedure as with the walking behaviour can be done using data from a Kinect. Since a Kinect provides allmost the same joints as available in a Nao robot, it would have been possible to have a human perform some \emph{dry} ice skating in front of a Kinect. After some processing (i.e. removing unwanted joints) we could then feed this data to the algorithm and use the produced CPPN in the same was as with the walking behaviour.
 
 \subsection{HyperNEAT Settings}
-For the hypothetical experiment setup we use Another HyperNEAT Implementation (AHNI) by O. Coleman. Using a configuration file we are able to set certain properties of the algorithm. The most interesting ones will be discussed in the following sections.
+For the hypothetical experiment setup we use Another HyperNEAT Implementation (hereafter called AHNI) by O. Coleman. Using a configuration file we are able to set certain properties of the algorithm. The most interesting ones will be discussed in the following sections.
 
 \subsubsection{General}
 HyperNEAT is set to run a certain amount of \emph{evolutions}. In each evolution a certain amount of \emph{generations} will be performed, which consist of evaluating the fitness of the current population and generating the next population. The default values of the number of evolutions and the number of generations are set at 100 and 50 respectively. We have no idea whether these settings would work and therefor a lot of experimenting is needed.
 
 Another important property is the number of individuals in the population. By default this value is 10, which seems fair. However, it might be necessary to increase this value to allow for enough speciation, but this also increases the computational complexity. Thus keeping a fine balance between enough speciation and computation complexity is needed.
 
+Furthermore it is possible to use elitism for selecting when creating new generations. Since we think that evolving suitable ice skating behaviour takes a long time, keeping track of the best individuals seems a wise choice.
+
+
+* Scaling, but only horizontally (i.e. in time).
+
 \subsubsection{Mutation}
-HyperNEAT evolves topologies of neural networks. Therefor mutation involves adding, removing and changing of neurons, connections and weights. Ofcourse, no neurons can be removed or added from the input and output layer, since those values are fixed. The Another HyperNEAT Implementation allows adjust the rate at which the neurons, connects and weights are mutated. 
+HyperNEAT evolves topologies of neural networks. Therefor mutation involves adding, removing and changing of neurons, connections and weights. Ofcourse, no neurons can be added to or removed from the input and output layers, since those values are fixed. AHNI allows to adjust the rate at which the neurons, connects and weights are mutated. It is important to have enough mutation such that topologies can be formed to capture the complex ice skating behaviour. However, having too much mutation makes finding a suitable ice skating behaviour very difficult. Thus, a lot experimenting with the different values is necessary. 
 
-
-
-
-# Interesting settings:
-- Number of evolution runs to perform;
-- Number of generations (fitness evaluations followed by generation of the next population) to perform per evolution run;
-- Number of individuals in the population.
-
-# Mutation:
-- Per neuron (add/remove);
-- Per connection (add/remove);
-- Per weight (add/remove);
-
-# Make use of elitism.
-
-# Make use of speciation.
-
-# Scaling, but only horizontally (i.e. in time).
-
-# Topology:
-- Initially random;
-- Single input and output layer (fully connected);
-- Allowed activation functions (sigmoid, gaussian, sine, absolute);
-
-
-* Close to the original ...
+\subsubsection{Topology}
+The initial topology of the algorithm would consist of a single input and output player. They would both contain the same amount of neurons (i.e. equal to the amount of joints involved) and the network would be fully connected. The values of the weights would initially be random. Since each neuron is able to have its own activation function it is necessary to set the allowed activation functions. By default, these are the sigmoid, Gaussian, sine and absolute functions. At least the sigmoid and the sine functions would be necessary to evolve networks to allow for the recurrent phase of ice skating behaviour. However, other functions could also prove useful, thus experimenting with diffent activation functions seems necessary.
 
 \subsection{Expected Results}
 
@@ -163,8 +144,6 @@ HyperNEAT evolves topologies of neural networks. Therefor mutation involves addi
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Proof of Concept}
 \label{sec:proof-of-concept}
-\section{Introduction}
-\label{sec:introductionProofOfConcept}
 As described in section \ref{sec:initial-experimental-setup} hyperNEAT does not generate any suitable values. As a way of demonstrating that (except for the neuro evolution algorithm algorithm) our implemented setup works an alternative evolutionary algorithm is implemented. The fitness functions described in section \ref{sec:initial-experimental-setup} are implemented in Java, which brought the choice of our evolutionary algorithm to the easily usable and implementable Genetic Algorithms and Genetic Programming component (JGap). 
 
 \begin{figure}[h!]
@@ -173,7 +152,7 @@ As described in section \ref{sec:initial-experimental-setup} hyperNEAT does not 
 \label{fig:jgapsetup}
 \end{figure}
 
-JGap is provided as a Java framework and provides basic genetic mechanisms that can be easily used to apply evolutionary principles to problem solutions \cite{jgap}. JGap is free of charge and can be downloaded at http://jgap.sourceforge.net/. 
+JGap is provided as a Java framework and provides basic genetic mechanisms that can be easily used to apply evolutionary principles to problem solutions \cite{jgap}. JGap is free of charge and can be downloaded at \url{http://jgap.sourceforge.net/}. 
 
 As described in section \ref{sec:setup} the representation the motion of our Nao robot is represented as a two-dimensional array with double values. As JGap works with a genome consisting of an array of alleles consisting of double values a simple algorithm is written to converge the one-dimensional output of JGap into a two-dimensional array. 
 
@@ -224,16 +203,12 @@ As our algorithm does not converge to an ice-skating motion the only conclusion 
 As shown in the previous section (section \ref{sec:analysisOfTheResults}) our setup is able to generate very nice behaviours as long as the fitness function is chosen correctly. Especially our arm moving fitness (section \ref{sec:resultsJGapArmMoving}) shows that the generated behaviours still are not optimal as the generated values are off from their ideal values. This problem can probably be easily solved by having a larger population and more generations, which is not possible in a small computational time of less than a day. 
 
 
-
-
-
-
-
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % CONCLUSION
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Conclusion}
 \label{sec:conclusion}
+Need the rest of the report to write a conclusion.
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
