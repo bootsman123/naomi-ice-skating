@@ -81,6 +81,7 @@ In the previous section we have explained the major details of our project and w
 
 
 \subsection{Setup}
+\label{sec:setup}
 As we already explained we would have wanted to use a different approach, namely using a direct feedback loop from the simulator to the HyperNEAT algorithm. This means that for each time step $t$ the current joint values of the robot in the simulator are read and feed as input into the HyperNEAT algorithm which produces the joint values for time step $t + 1$. Trying to evolve a complete behaviour (i.e. a motion file) has deemed to prove too difficult. However the described approach allows for a more direct mapping between the evolving behavior and the HyperNEAT algorithm in which the problem can be solved in smaller steps. A similar approach was used in evolving a walking gait for a quadruped using generative enconding \cite{EvolvingCoordinatedQuadrupedQaitsWithTheHyperNEATGenerativeEncoding}.
 
 * Able to use the scaling abilities of HyperNEAT;
@@ -115,7 +116,7 @@ By default a walking motion is already provided by Webots containing the exact j
 
 
 \subsection{Fitness Functions}
-
+\label{sec:fitnessFunctions}
 
 Predictions about the experiments...
 
@@ -136,7 +137,67 @@ Predictions about the experiments...
 \label{sec:introductionProofOfConcept}
 As described in section \ref{sec:initial-experimental-setup} hyperNEAT does not generate any suitable values. As a way of demonstrating that (except for the neuro evolution algorithm algorithm) our implemented setup works an alternative evolutionary algorithm is implemented. The fitness functions described in section \ref{sec:initial-experimental-setup} are implemented in Java, which brought the choice of our evolutionary algorithm to the easily usable and implementable Genetic Algorithms and Genetic Programming component (JGap). 
 
-JGap is provided as a Java framework and provides basic genetic mechanisms that can be easily used to apply evolutionary principles to problem solutions[Reference to http://jgap.sourceforge.net/]. JGap is free of charge and can be downloaded at http://jgap.sourceforge.net/. 
+\begin{figure}[h!]
+\includegraphics{images/jgapSetup}
+\caption{Setup used for running our evolutionary algorithm}
+\label{fig:jgapsetup}
+\end{figure}
+
+JGap is provided as a Java framework and provides basic genetic mechanisms that can be easily used to apply evolutionary principles to problem solutions \cite{jgap}. JGap is free of charge and can be downloaded at http://jgap.sourceforge.net/. 
+
+As described in section \ref{sec:setup} the representation the motion of our Nao robot is represented as a two-dimensional array with double values. As JGap works with a genome consisting of an array of alleles consisting of double values a simple algorithm is written to converge the one-dimensional output of JGap into a two-dimensional array. 
+
+During the generating of the next generation of chromosomes the existing chromosomes are crossed over. It is very probable that a chromosome generates a motion in which the first half is a very suitable motion, but leads to the Nao falling over halfway during this motion. This leads to our choice of the single-point crossover parameter which randomly selects a point to start the crossover. 
+
+Continuously generating new generations of chromosomes by crossing over leads to a very small amount of alleles surviving and leads to sparsity of diversity in the population. Due to this a mutation parameter is introduced. The downside of mutation is that a mutated chromosome is more likely to introduce a “wrong” parameter at the start of a file. This makes mutation dangerous and leads to our choice of mutating only 1/12 of chromosomes. 
+
+After each generation the chromosomes used in the next generation are selected. As there is not one definite motion the algorithm has to converge to even sub-optimal chromosomes have to survive. Our algorithm selects the best 90 percent of chromosomes each generation and uses these to generate the next generation. These chromosomes are manipulated, and the best chromosome is preserved to prevent it from dying after all manipulations. 
+
+There are a lot of different motions that our Nao can perform to achieve a forwards motion. This means that even a motion that is not ideal is able to evolve into a motion that has a high fitness. With this in mind, ideally the population size is very large, as this gives more way to innovative solutions. Unfortunately the computation time of the fitness function is very large, as described in section \ref{sec:fitnessFunctions}. To speed up the simulation a population size of only 30 is chosen. 
+
+As there is no clear goal that our Nao has to reach while moving forward and our algorithm is not able to run forever an amount of maximum generations is selected as termination condition. As there was not a lot of time to run our algorithm the termination condition taken was 200 generations. 
+
+
+\section{Analysis of the results}
+\label{sec:analysisOfTheResults}
+\subsection{Arm moving}
+\label{sec:resultsJGapArmMoving}
+-> Graph-like thing that describes how the fitness improves over the different generations
+
+During the running of the evolutionary algorithm with the arm moving fitness function no real milestones can be found. The algorithm starts with moving its arm randomly, and keeps selecting a better arm-raising motion every generation. 
+
+Unfortunately our final chromosome still has values that are terribly off compared to the ideal values. Apart from this “problem” the final result looks like a very solid arm movement. The conclusion of our arm moving fitness function is that evolutionary algorithms are very capable of producing the simple movement of one joint. 
+
+\subsection{Moving forwards for four seconds}
+\label{sec:resultsJGapForwardsMoving}
+-> Graph-like thing that describes how the fitness improves over the different generations
+
+In the first five generations the evolved behaviours consist of our Nao performing some random movement which leads to a strange forwards motion. Starting from generation six the algorithm develops a rolling motion that ends at the four second mark. As our distance-measure point is the middle of our robot this makes a lot of sense. By performing a roll a little bit of extra distance is gained during the four seconds in which the motion is performed. Starting at iteration 120 a new behaviour emerges: sidewards “shuffeling”. This behaviour proves to be the best reachable behaviour in 200 generations as no better behaviour is found. 
+
+Although our best chromosome after 200 generations is capable of traversing a large distance in four seconds it does not look like a very stable walking gait. Evolutionary algorithms thus are very capable of producing an advanced movement like this when they have enough time. The other conclusion is that the produced gait is not stable enough to use in a real robot, it thus is necessary to improve our fitness function. 
+
+\subsection{Repeated motion for twelve seconds}
+\label{sec:resultsJGapForwardsMovingTwelveSeconds}
+-> Graph-like thing that describes how the fitness improves over the different generations
+
+In the first five generations the evolved behaviours consist of our Nao performing some random movement leading to eventually falling on its back. In generation six our algorithm discovers that by turning around at the start of the motion it gains a little more distance (as the measure point for distance is the middle of our robot). In the same generation it starts to walk by using its arms as support (just like a gorilla). It also generates a motion that prevents the Nao from falling, consecutive generations improve the motion and keep preventing our Nao from tumbling over (except for generation 60).
+
+Although our best chomosome after 200 iterations is capable of traversing a large distance in twelve seconds by repeating the four seconds long motion three times it unfortunately does not look like a very stable gait. Evolutionary algorithms thus are also very capable of producing an advanced repeated movement like this when they have enough time. Just like the fitness function of the four second long motion (in section \ref{sec:resultsJGapForwardsMoving} this motion is not stable enough to use in a real robot and our fitness function has to be improved. 
+
+\subsection{Ice skating}
+-> Graph-like thing that describes how the fitness improves over the different generations
+-> Describing the steps in the evolutions -> show that even the final results can be improved
+As our algorithm does not converge to an ice-skating motion the only conclusion is that our fitness function has to be adjusted to account for more than just the accelerometer data. 
+
+
+\section{General conclusion for all results}
+As shown in the previous section (section \ref{sec:analysisOfTheResults}) our setup is able to generate very nice behaviours as long as the fitness function is chosen correctly. Especially our arm moving fitness (section \ref{sec:resultsJGapArmMoving}) shows that the generated behaviours still are not optimal as the generated values are off from their ideal values. This problem can probably be easily solved by having a larger population and more generations, which is not possible in a small computational time of less than a day. 
+
+
+
+
+
+
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % CONCLUSION
