@@ -90,6 +90,7 @@ As we already explained we would have wanted to use a different approach, namely
 * LOCATION IN SUBSTRATE NETWOTK?
 
 \subsection{Experiments}
+\label{sec:experiments}
 In order to investige our research question, whether it is possible to learn ice skating behavior to a Nao robot in a simulated environment, we would have to perform several experiments. As we have already explained ice skating behaviour consists of two phases, namely the startup phase and the recurrent phase. Since we are primarely interested in the recurrent phase all the experiments focus on trying to evolve an behaviour which has the property of a recurrent motion. This means that any evolved behavior not only has to work for the duration in which the algorithm runs, but also for durations larger than what is being evolved for. It seems logical to make use of the scaling abilities of HyperNEAT to scale up in time. 
 
 
@@ -148,7 +149,7 @@ The initial topology of the algorithm would consist of a single input and output
 As described in section \ref{sec:hypothetical-experimental-setup} HyperNEAT does not generate any suitable values. As a way of demonstrating that (except for the neuro evolution algorithm algorithm) our implemented setup works an alternative evolutionary algorithm is implemented. The fitness functions described in section \ref{sec:initial-experimental-setup} are implemented in Java, which brought the choice of our evolutionary algorithm to the easily usable and implementable Genetic Algorithms and Genetic Programming component (JGap). 
 
 \begin{figure}[h!]
-\includegraphics{images/jgapSetup}
+\includegraphics[width=100mm]{images/jgapSetup}
 \caption{Setup used for running our evolutionary algorithm}
 \label{fig:jgapsetup}
 \end{figure}
@@ -163,7 +164,7 @@ Continuously generating new generations of chromosomes by crossing over leads to
 
 After each generation the chromosomes used in the next generation are selected. As there is not one definite motion the algorithm has to converge to even sub-optimal chromosomes have to survive. Our algorithm selects the best 90 percent of chromosomes each generation and uses these to generate the next generation. These chromosomes are manipulated, and the best chromosome is preserved to prevent it from dying after all manipulations. 
 
-There are a lot of different motions that our Nao can perform to achieve a forwards motion. This means that even a motion that is not ideal is able to evolve into a motion that has a high fitness. With this in mind, ideally the population size is very large, as this gives more way to innovative solutions. Unfortunately the computation time of the fitness function is very large, as described in section \ref{sec:fitnessFunctions}. To speed up the simulation a population size of only 30 is chosen. 
+There are a lot of different motions that our Nao can perform to achieve a forwards motion. This means that even a motion that is not ideal is able to evolve into a motion that has a high fitness. With this in mind, ideally the population size is very large, as this gives more way to innovative solutions. Unfortunately the computation time of the fitness function is very large, as described in section \ref{sec:experiments}. To speed up the simulation a population size of only 30 is chosen. 
 
 As there is no clear goal that our Nao has to reach while moving forward and our algorithm is not able to run forever an amount of maximum generations is selected as termination condition. As there was not a lot of time to run our algorithm the termination condition taken was 200 generations. 
 
@@ -172,15 +173,26 @@ As there is no clear goal that our Nao has to reach while moving forward and our
 \label{sec:analysisOfTheResults}
 \subsection{Arm moving}
 \label{sec:resultsJGapArmMoving}
--> Graph-like thing that describes how the fitness improves over the different generations
 
-During the running of the evolutionary algorithm with the arm moving fitness function no real milestones can be found. The algorithm starts with moving its arm randomly, and keeps selecting a better arm-raising motion every generation. 
+\begin{figure}[h!]
+\includegraphics[width=100mm]{images/arm}
+\caption{Fitness of the arm raising algorithm before the program crashed.}
+\label{fig:armFitness}
+\end{figure}
 
-Unfortunately our final chromosome still has values that are terribly off compared to the ideal values. Apart from this “problem” the final result looks like a very solid arm movement. The conclusion of our arm moving fitness function is that evolutionary algorithms are very capable of producing the simple movement of one joint. 
+
+During the running of the evolutionary algorithm with the arm moving fitness function no real milestones can be found. The algorithm starts with moving its arm randomly, and keeps selecting a better arm-raising motion every generation. Unfortunately our program crashed after 32 generations. 
+
+Our final chromosome still has values that are terribly off compared to the ideal values. Apart from this “problem” the final result looks like a very solid arm movement. The conclusion of our arm moving fitness function is that evolutionary algorithms are very capable of producing the simple movement of one joint.
 
 \subsection{Moving forwards for four seconds}
 \label{sec:resultsJGapForwardsMoving}
--> Graph-like thing that describes how the fitness improves over the different generations
+\begin{figure}[h!]
+\includegraphics[width=100mm]{images/walking}
+\caption{Fitness of the algorithm that evolves a motion of four seconds.}
+\label{fig:walkingFitness}
+\end{figure}
+
 
 In the first five generations the evolved behaviours consist of our Nao performing some random movement which leads to a strange forwards motion. Starting from generation six the algorithm develops a rolling motion that ends at the four second mark. As our distance-measure point is the middle of our robot this makes a lot of sense. By performing a roll a little bit of extra distance is gained during the four seconds in which the motion is performed. Starting at iteration 120 a new behaviour emerges: sidewards \emph{shuffling}. This behaviour proves to be the best reachable behaviour in 200 generations as no better behaviour is found. 
 
@@ -188,15 +200,26 @@ Although our best chromosome after 200 generations is capable of traversing a la
 
 \subsection{Repeated motion for twelve seconds}
 \label{sec:resultsJGapForwardsMovingTwelveSeconds}
--> Graph-like thing that describes how the fitness improves over the different generations
+\begin{figure}[h!]
+\includegraphics[width=100mm]{images/walkingtwelve}
+\caption{Fitness of the algorithm that evolves a repeated motion for twelve seconds.}
+\label{fig:walkingLongFitness}
+\end{figure}
+
 
 In the first five generations the evolved behaviours consist of our Nao performing some random movement leading to eventually falling on its back. In generation six our algorithm discovers that by turning around at the start of the motion it gains a little more distance (as the measure point for distance is the middle of our robot). In the same generation it starts to walk by using its arms as support (just like a gorilla). It also generates a motion that prevents the Nao from falling, consecutive generations improve the motion and keep preventing our Nao from tumbling over (except for generation 60).
 
 Although our best chomosome after 200 iterations is capable of traversing a large distance in twelve seconds by repeating the four seconds long motion three times it unfortunately does not look like a very stable gait. Evolutionary algorithms thus are also very capable of producing an advanced repeated movement like this when they have enough time. Just like the fitness function of the four second long motion (in section \ref{sec:resultsJGapForwardsMoving} this motion is not stable enough to use in a real robot and our fitness function has to be improved. 
 
 \subsection{Ice skating}
--> Graph-like thing that describes how the fitness improves over the different generations
--> Describing the steps in the evolutions -> show that even the final results can be improved
+\begin{figure}[h!]
+\includegraphics[width=100mm]{images/iceskating}
+\caption{Fitness of the algorithm that evolves a motion based on the sensor data from Marlies}
+\label{fig:iceskatingFitness}
+\end{figure}
+
+Although figure \ref{fig:iceskatingFitness} shows an improvement of fitness, the fitness stays very low. When visually inspecting the produced behaviours no real improvement can be seen. 
+
 As our algorithm does not converge to an ice skating behaviour the only conclusion is that our fitness function has to be adjusted to account for more than just the accelerometer data. 
 
 
