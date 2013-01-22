@@ -6,3 +6,4 @@
 *.tcp
 *.tps
 makefile
+*.pdf
