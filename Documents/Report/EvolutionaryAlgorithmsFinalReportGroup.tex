@@ -84,15 +84,17 @@ In the previous section we have explained the major details of our project and w
 \label{sec:setup}
 As we already explained we would have wanted to use a different approach, namely using a direct feedback loop from the simulator to the HyperNEAT algorithm. This means that for each time step $t$ the current joint values of the robot in the simulator are read and feed as input into the HyperNEAT algorithm which produces the joint values for time step $t + 1$. Trying to evolve a complete behaviour (i.e. a motion file) has deemed to prove too difficult. However the described approach allows for a more direct mapping between the evolving behavior and the HyperNEAT algorithm in which the problem can be solved in smaller steps. A similar approach was used in evolving a walking gait for a quadruped using generative enconding \cite{EvolvingCoordinatedQuadrupedQaitsWithTheHyperNEATGenerativeEncoding}.
 
+
 * Able to use the scaling abilities of HyperNEAT;
 * Something about how long (settings) each run would take, etc.
+* LOCATION IN SUBSTRATE NETWOTK?
 
 \subsection{Experiments}
-In order to investige our research question, whether it is possible to learn ice skating behavior to a Nao robot in a simulated environment, we would have to perform several experiments. As we have already explained ice skating behaviour consists of two phases, namely the startup phase and the recurrent phase. Since we are primarely interested in the recurrent phase all the experiments focus on trying to evolve an behaviour which has the property of a recurrent motion. This means that any evolved behavior not only has to work for the duration in which the algorithm runs, but also for durations larger than what is being evolved for. ...
+In order to investige our research question, whether it is possible to learn ice skating behavior to a Nao robot in a simulated environment, we would have to perform several experiments. As we have already explained ice skating behaviour consists of two phases, namely the startup phase and the recurrent phase. Since we are primarely interested in the recurrent phase all the experiments focus on trying to evolve an behaviour which has the property of a recurrent motion. This means that any evolved behavior not only has to work for the duration in which the algorithm runs, but also for durations larger than what is being evolved for. It seems logical to make use of the scaling abilities of HyperNEAT to scale up in time. 
 
 
 \subsubsection{Condition: With Initial Velocity}
-For the baseline condition we are interested in the recurrent phase of an ice skating behavior. Therefor we want to investigate whether it is possible to evolve an ice skating behavior from a standing position with an initial velocity. This means that the Nao is in the initial position (i.e. all the joints are initially at 0) and a specific force has been applied to the robot which results in a certain velocity. 
+For the baseline condition we are interested in the recurrent phase of an ice skating behavior. Therefor we want to investigate whether it is possible to evolve an ice skating behavior from a standing position with an initial velocity. This means that the Nao is in the initial position (i.e. all the joints are initially at 0) and a specific force has been applied to the robot which results in a certain velocity. This probably means that the robot only has to make small movements while still being able to gain ...
 
 @TODO: THis probably means that the robot only has too small movements...
 
@@ -111,10 +113,10 @@ In the case that both previous conditions produced no suitable ice skating motio
 
 
 \subsubsection{Condition: Walking Behaviour}
-By default a walking behaviour is already provided by Webots containing the exact joint values at each time step. We could have used the motion file to train the algorithm with a fitness function based on how much the output differs from the already known joint values. After a certain number of generations or until the algorithm has perfectly learning the motion we could then save the CPPN and when evolving any of the previous two behaviours already add it to the population. Putting an already evolved behaviour in the population could enhance the  
+By default a walking behaviour is already provided by Webots containing the exact joint values at each time step. We could have used the motion file to train the algorithm with a fitness function based on how much the output differs from the already known joint values. After a certain number of generations or until the algorithm has perfectly learning the motion we could then save the network and when evolving any of the previous two behaviours already add it to the population. Putting an already evolved behaviour in the population could enhance the  
 
 \subsubsection{Condition: Human Ice Skating Behaviour From a Kinect}
-A similar procedure as with the walking behaviour can be done using data from a Kinect. Since a Kinect provides allmost the same joints as available in a Nao robot, it would have been possible to have a human perform some \emph{dry} ice skating in front of a Kinect. After some processing (i.e. removing unwanted joints) we could then feed this data to the algorithm and use the produced CPPN in the same was as with the walking behaviour.
+A similar procedure as with the walking behaviour can be done using data from a Kinect. Since a Kinect provides allmost the same joints as available in a Nao robot, it would have been possible to have a human perform some \emph{dry} ice skating in front of a Kinect. After some processing (i.e. removing unwanted joints) we could then feed this data to the algorithm and use the produced network in the same was as with the walking behaviour.
 
 \subsection{HyperNEAT Settings}
 For the hypothetical experiment setup we use Another HyperNEAT Implementation (hereafter called AHNI) by O. Coleman. Using a configuration file we are able to set certain properties of the algorithm. The most interesting ones will be discussed in the following sections.
@@ -122,12 +124,11 @@ For the hypothetical experiment setup we use Another HyperNEAT Implementation (h
 \subsubsection{General}
 HyperNEAT is set to run a certain amount of \emph{evolutions}. In each evolution a certain amount of \emph{generations} will be performed, which consist of evaluating the fitness of the current population and generating the next population. The default values of the number of evolutions and the number of generations are set at 100 and 50 respectively. We have no idea whether these settings would work and therefor a lot of experimenting is needed.
 
-Another important property is the number of individuals in the population. By default this value is 10, which seems fair. However, it might be necessary to increase this value to allow for enough speciation, but this also increases the computational complexity. Thus keeping a fine balance between enough speciation and computation complexity is needed.
+Another important property is the number of individuals in the population. By default this value is 10, which seems fair. However, it might be necessary to increase this value to allow for enough speciation, but this also increases the computational complexity. Thus keeping a fine balance between enough speciation and computation complexity is needed. Furthermore it is possible to use elitism for selecting when creating new generations. Since we think that evolving suitable ice skating behaviour takes a long time, keeping track of the best individuals seems a wise choice.
 
-Furthermore it is possible to use elitism for selecting when creating new generations. Since we think that evolving suitable ice skating behaviour takes a long time, keeping track of the best individuals seems a wise choice.
+For all the experiments it is also important to make use of the scaling abilities of HyperNEAT. With scaling it is possible to take an already evolved network and scale it both horizontally and vertically without the need for extra training. However, in our case we are only interested in the vertical (in time) scaling, since both the number of inputs and outputs are fixed. In AHNI scaling always works in both directions, thus it might not even be possible to make use of this.
 
-
-* Scaling, but only horizontally (i.e. in time).
+@TODO: LOCATION IN SUBSTRATE NETWORK
 
 \subsubsection{Mutation}
 HyperNEAT evolves topologies of neural networks. Therefor mutation involves adding, removing and changing of neurons, connections and weights. Ofcourse, no neurons can be added to or removed from the input and output layers, since those values are fixed. AHNI allows to adjust the rate at which the neurons, connects and weights are mutated. It is important to have enough mutation such that topologies can be formed to capture the complex ice skating behaviour. However, having too much mutation makes finding a suitable ice skating behaviour very difficult. Thus, a lot experimenting with the different values is necessary. 
@@ -136,7 +137,7 @@ HyperNEAT evolves topologies of neural networks. Therefor mutation involves addi
 The initial topology of the algorithm would consist of a single input and output player. They would both contain the same amount of neurons (i.e. equal to the amount of joints involved) and the network would be fully connected. The values of the weights would initially be random. Since each neuron is able to have its own activation function it is necessary to set the allowed activation functions. By default, these are the sigmoid, Gaussian, sine and absolute functions. At least the sigmoid and the sine functions would be necessary to evolve networks to allow for the recurrent phase of ice skating behaviour. However, other functions could also prove useful, thus experimenting with diffent activation functions seems necessary.
 
 \subsection{Expected Results}
-
+@TODO: ...
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -144,7 +145,7 @@ The initial topology of the algorithm would consist of a single input and output
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Proof of Concept}
 \label{sec:proof-of-concept}
-As described in section \ref{sec:initial-experimental-setup} hyperNEAT does not generate any suitable values. As a way of demonstrating that (except for the neuro evolution algorithm algorithm) our implemented setup works an alternative evolutionary algorithm is implemented. The fitness functions described in section \ref{sec:initial-experimental-setup} are implemented in Java, which brought the choice of our evolutionary algorithm to the easily usable and implementable Genetic Algorithms and Genetic Programming component (JGap). 
+As described in section \ref{sec:hypothetical-experimental-setup} HyperNEAT does not generate any suitable values. As a way of demonstrating that (except for the neuro evolution algorithm algorithm) our implemented setup works an alternative evolutionary algorithm is implemented. The fitness functions described in section \ref{sec:initial-experimental-setup} are implemented in Java, which brought the choice of our evolutionary algorithm to the easily usable and implementable Genetic Algorithms and Genetic Programming component (JGap). 
 
 \begin{figure}[h!]
 \includegraphics{images/jgapSetup}
@@ -181,7 +182,7 @@ Unfortunately our final chromosome still has values that are terribly off compar
 \label{sec:resultsJGapForwardsMoving}
 -> Graph-like thing that describes how the fitness improves over the different generations
 
-In the first five generations the evolved behaviours consist of our Nao performing some random movement which leads to a strange forwards motion. Starting from generation six the algorithm develops a rolling motion that ends at the four second mark. As our distance-measure point is the middle of our robot this makes a lot of sense. By performing a roll a little bit of extra distance is gained during the four seconds in which the motion is performed. Starting at iteration 120 a new behaviour emerges: sidewards “shuffeling”. This behaviour proves to be the best reachable behaviour in 200 generations as no better behaviour is found. 
+In the first five generations the evolved behaviours consist of our Nao performing some random movement which leads to a strange forwards motion. Starting from generation six the algorithm develops a rolling motion that ends at the four second mark. As our distance-measure point is the middle of our robot this makes a lot of sense. By performing a roll a little bit of extra distance is gained during the four seconds in which the motion is performed. Starting at iteration 120 a new behaviour emerges: sidewards \emph{shuffling}. This behaviour proves to be the best reachable behaviour in 200 generations as no better behaviour is found. 
 
 Although our best chromosome after 200 generations is capable of traversing a large distance in four seconds it does not look like a very stable walking gait. Evolutionary algorithms thus are very capable of producing an advanced movement like this when they have enough time. The other conclusion is that the produced gait is not stable enough to use in a real robot, it thus is necessary to improve our fitness function. 
 
@@ -196,7 +197,7 @@ Although our best chomosome after 200 iterations is capable of traversing a larg
 \subsection{Ice skating}
 -> Graph-like thing that describes how the fitness improves over the different generations
 -> Describing the steps in the evolutions -> show that even the final results can be improved
-As our algorithm does not converge to an ice-skating motion the only conclusion is that our fitness function has to be adjusted to account for more than just the accelerometer data. 
+As our algorithm does not converge to an ice skating behaviour the only conclusion is that our fitness function has to be adjusted to account for more than just the accelerometer data. 
 
 
 \section{General conclusion for all results}
@@ -208,7 +209,15 @@ As shown in the previous section (section \ref{sec:analysisOfTheResults}) our se
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 \section{Conclusion}
 \label{sec:conclusion}
-Need the rest of the report to write a conclusion.
+* @TODO: Need the rest of the report to write a conclusion.
+
+The goal of the project was to investigate whether it was possible to evolve an ice skating behaviour for a Nao robot in a simulated environment using HyperNEAT. In section \ref{sec:initial-experimental-setup} we have explained that the setup using HyperNEAT did not work as expected. @TODO: ... problems
+
+In section \ref{sec:hypothetical-experimental-setup} we have explained our hypothetical experiments we would have run. We would have focused on ...
+
+In the final section ...
+
+Final conclusion ....
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
