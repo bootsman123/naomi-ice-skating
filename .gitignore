@@ -5,3 +5,4 @@
 *.blg
 *.tcp
 *.tps
+makefile
